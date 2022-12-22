@@ -9,15 +9,18 @@ class Board{
     this.tiles.forEach(row=>console.log(row.join(' ')));
   }
 
-  placeKnight(row, col){
-    this.tiles[row][col] = 'k';
+  placePiece(knight){
+    this.tiles[knight.position[0]][knight.position[1]] = knight.ascii;
   }
 }
 
 class Knight{
   ascii = 'k';
-  position = [];
+  constructor(row,col){
+    this.position = [row,col];
+  }
 }
 const board = new Board();
-board.placeKnight(4, 4);
+const knight = new Knight(4,4);
+board.placePiece(knight);
 board.visualize();
