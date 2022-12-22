@@ -9,8 +9,8 @@ class Board{
     this.tiles.forEach(row=>console.log(row.join(' ')));
   }
 
-  placePiece(knight){
-    this.tiles[knight.position[0]][knight.position[1]] = knight.ascii;
+  placePiece(piece){
+    this.tiles[piece.position[0]][piece.position[1]] = piece.ascii;
   }
 }
 
