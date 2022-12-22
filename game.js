@@ -3,7 +3,7 @@ class Board{
   targetPos = [];
   targetChar = 'd';
   constructor(){
-    this.tiles = Array.from(Array(this.size), ()=>Array.from(Array(this.size), tile=>',')); 
+    this.tiles = Array.from(Array(this.size), ()=>Array.from(Array(this.size), tile=>'·')); 
   }
 
   visualize(){
@@ -45,3 +45,5 @@ board.targetPos = [2,4];
 board.placePiece(knight);
 board.setTarget(board.targetPos);
 board.visualize();
+
+
