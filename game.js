@@ -1,9 +1,14 @@
 class Board{
+  size = 8;
   constructor(){
-    this.tiles = Array(8).fill(Array(8).fill('x'));
+    this.tiles = Array(this.size).fill(Array(this.size).fill('x'));
+  }
+
+  visualize(){
+    this.tiles.forEach(tile=>console.log(tile.join(' ')));
   }
 }
 
 const board = new Board();
 
-console.dir(board.tiles);
+board.visualize();
