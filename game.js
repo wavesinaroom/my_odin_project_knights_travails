@@ -2,10 +2,7 @@ class Board{
   size = 8;
 
   constructor(){
-    this.tiles = Array.from(Array(this.size), ()=>Array.from(Array(this.size))); 
-    for(let r = 0; r<this.size; ++r)
-      for(let c = 0; c<this.size; ++c)
-        this.tiles[r][c] = ',';
+    this.tiles = Array.from(Array(this.size), ()=>Array.from(Array(this.size), tile=>',')); 
   }
 
   visualize(){
