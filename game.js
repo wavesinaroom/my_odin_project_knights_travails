@@ -1,6 +1,7 @@
 class Board{
   size = 8;
-  destination = 'd';
+  targetPos = [];
+  targetChar = 'd';
   constructor(){
     this.tiles = Array.from(Array(this.size), ()=>Array.from(Array(this.size), tile=>',')); 
   }
@@ -10,11 +11,25 @@ class Board{
   }
 
   placePiece(piece){
-    this.tiles[piece.position[0]][piece.position[1]] = piece.ascii;
+    if(this.isOutOfBoundaries(piece.position[0])||this.isOutOfBoundaries(piece.position[1]))
+      throw new Error(`Piece is out board boundaries`);
+    else
+      this.tiles[piece.position[0]][piece.position[1]] = piece.ascii;
   }
 
-  setDestination(position){
-    this.tiles[position[0]][position[1]]= this.destination;
+  setTarget(position){
+
+    if(this.isOutOfBoundaries(position[0])||this.isOutOfBoundaries(position[1]))
+      throw new Error(`Target is out board boundaries`);
+    else
+      this.tiles[position[0]][position[1]]= this.targetChar;
+  }
+  
+  isOutOfBoundaries(coordinate){
+    if(coordinate>this.size||coordinate<0)
+      return true;
+    else
+      return false
   }
 }
 
@@ -25,8 +40,8 @@ class Knight{
   }
 }
 const board = new Board();
-const knight = new Knight(4,4);
-const destination = [3,2];
+const knight = new Knight(1,4);
+board.targetPos = [2,4];
 board.placePiece(knight);
-board.setDestination(destination);
+board.setTarget(board.targetPos);
 board.visualize();
