@@ -2,6 +2,7 @@ class Board{
   size = 8;
   targetPos = [];
   targetToken = 'd';
+  moveToken = 'a';
 
   static isOutOfBoundaries(x,y){
     if(x>this.size||x<0)
@@ -27,6 +28,10 @@ class Board{
       this.tiles[position[0]][position[1]] = token;
   }
   
+  showPieceMoves(piece){
+    for(let i = 0; i<piece.moves.length; ++i)
+      this.tiles[piece.moves[i][0]][piece.moves[i][1]] = this.moveToken;
+  }
 
 }
 
@@ -93,6 +98,6 @@ const knight = new Knight(4,4);
 board.targetPos = [2,4];
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken);
-board.visualize();
 knight.getMoves();
-console.dir(knight.moves);
+board.showPieceMoves(knight);
+board.visualize();
