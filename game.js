@@ -38,60 +38,58 @@ class Board{
   }
 }
 
+class MovesTree{
+  constructor(position){
+    const twoStep = 2;
+    const oneStep = 1;
+
+    // -
+    //|
+    //|
+    this.uur = [position[0]+oneStep, position[1]+twoStep];
+    
+    //  |
+    //--
+    this.rru = [position[0]+twoStep, position[1]+oneStep];
+
+    //--
+    //  |
+    this.rrd = [position[0]+twoStep,position[1]-oneStep]
+
+    //|
+    //|
+    // -
+    this.ddr = [position[0]+oneStep, position[1]-twoStep];
+
+    // |
+    // |
+    //-
+    this.ddl = [position[0]-oneStep, position[1]-twoStep]; 
+
+    // --
+    //|
+    this.lld = [position[0]-twoStep, position[1]-oneStep];
+
+    //|
+    // --
+    this.llu = [position[0]-twoStep, position[1]+oneStep];
+
+    //-
+    // |
+    // |
+    this.uul = [position[0]-oneStep, position[1]+twoStep];
+
+  }
+}
 class Knight{
   ascii = 'k';
-  moves = [];
+  moves;
   constructor(row,col){
     this.position = [row,col];
   }
 
   getMoves(){
-    const twoStep = 2;
-    const oneStep = 1;
-    let move = [];
-
-    // -
-    //|
-    //|
-    const uur = [this.position[0]+oneStep,this.position[1]+twoStep];
-    this.moves.push(uur);
-    //  |
-    //--
-    const rru = [this.position[0]+twoStep,this.position[1]+oneStep];
-    this.moves.push(rru);
-
-    //--
-    //  |
-    const rrd = [this.position[0]+twoStep, this.position[1]-oneStep]
-    this.moves.push(rrd);
-
-    //|
-    //|
-    // -
-    const ddr = [this.position[0]+oneStep,this.position[1]-twoStep];
-    this.moves.push(ddr);
-
-    // |
-    // |
-    //-
-    const ddl = [this.position[0]-oneStep,this.position[1]-twoStep]; 
-    this.moves.push(ddl);
-
-    // --
-    //|
-    const lld = [this.position[0]-twoStep,this.position[1]-oneStep];
-    this.moves.push(lld);
-
-    //|
-    // --
-    const llu = [this.position[0]-twoStep,this.position[1]+oneStep];
-    this.moves.push(llu);
-
-    //-
-    // |
-    // |
-    const uul = [this.position[0]-oneStep,this.position[1]+twoStep];
-    this.moves.push(uul);
+    this.moves = new MovesTree(this.position);
   }
 }
 const board = new Board();
