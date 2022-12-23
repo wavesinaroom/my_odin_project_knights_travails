@@ -44,52 +44,52 @@ class Knight{
   }
 
   getMoves(){
-    const twoStep = 2;
+    const twoSteps = 2;
     const oneStep = 1;
    
     // -
     //|
     //|
-    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]-twoStep))
-      this.moves.push(Array.from([this.position[0]+oneStep,this.position[1]-twoStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]-twoSteps))
+      this.moves.push(Array.from([this.position[0]+oneStep,this.position[1]-twoSteps]));
 
     //  |
     //--
-    if(!Board.isOutOfBoundaries(this.position[0]+twoStep,this.position[1]-oneStep))
-      this.moves.push(Array.from([this.position[0]+twoStep,this.position[1]-oneStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]+twoSteps,this.position[1]-oneStep))
+      this.moves.push(Array.from([this.position[0]+twoSteps,this.position[1]-oneStep]));
 
     //--
     //  |
-    if(!Board.isOutOfBoundaries(this.position[0]+twoStep,this.position[1]+oneStep))
-      this.moves.push(Array.from([this.position[0]+twoStep,this.position[1]+oneStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]+twoSteps,this.position[1]+oneStep))
+      this.moves.push(Array.from([this.position[0]+twoSteps,this.position[1]+oneStep]));
 
     //|
     //|
     // -
-    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]+twoStep))
-      this.moves.push(Array.from([this.position[0]+oneStep,this.position[1]+twoStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]+twoSteps))
+      this.moves.push(Array.from([this.position[0]+oneStep,this.position[1]+twoSteps]));
 
     // |
     // |
     //-
-    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]+twoStep))
-      this.moves.push(Array.from([this.position[0]-oneStep,this.position[1]+twoStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]+twoSteps))
+      this.moves.push(Array.from([this.position[0]-oneStep,this.position[1]+twoSteps]));
 
     // --
     //|
-    if(!Board.isOutOfBoundaries(this.position[0]-twoStep,this.position[1]+oneStep))
-      this.moves.push(Array.from([this.position[0]-twoStep,this.position[1]+oneStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]-twoSteps,this.position[1]+oneStep))
+      this.moves.push(Array.from([this.position[0]-twoSteps,this.position[1]+oneStep]));
     
     //|
     // --
-    if(!Board.isOutOfBoundaries(this.position[0]-twoStep,this.position[1]-oneStep))
-      this.moves.push(Array.from([this.position[0]-twoStep,this.position[1]-oneStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]-twoSteps,this.position[1]-oneStep))
+      this.moves.push(Array.from([this.position[0]-twoSteps,this.position[1]-oneStep]));
 
     //-
     // |
     // |
-    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]-twoStep))
-      this.moves.push(Array.from([this.position[0]-oneStep,this.position[1]-twoStep]));
+    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]-twoSteps))
+      this.moves.push(Array.from([this.position[0]-oneStep,this.position[1]-twoSteps]));
   }
 }
 const board = new Board();
