@@ -1,7 +1,7 @@
 class Board{
   size = 8;
   targetPos = [];
-  targetChar = 'd';
+  targetToken = 'd';
 
   static isOutOfBoundaries(coordinate){
     if(coordinate[0]>this.size||coordinate[0]<0)
@@ -92,4 +92,5 @@ const board = new Board();
 const knight = new Knight(4,4);
 board.targetPos = [2,4];
 board.placeItem(knight.position, knight.token);
+board.placeItem(board.targetPos, board.targetToken);
 board.visualize();
