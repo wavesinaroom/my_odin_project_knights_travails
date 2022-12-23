@@ -2,6 +2,16 @@ class Board{
   size = 8;
   targetPos = [];
   targetChar = 'd';
+
+  static isOutOfBoundaries(coordinate){
+    if(coordinate[0]>this.size||coordinate[0]<0)
+      return true;
+    else if(coordinate[1]>this.size||coordinate[1]<0)
+      return true;
+    else
+      return false
+  }
+
   constructor(){
     this.tiles = Array.from(Array(this.size), ()=>Array.from(Array(this.size), tile=>'·')); 
   }
@@ -10,36 +20,18 @@ class Board{
     this.tiles.forEach(row=>console.log(row.join(' ')));
   }
 
-  placePiece(piece){
-    if(this.isOutOfBoundaries(piece.position[0])||this.isOutOfBoundaries(piece.position[1]))
-      throw new Error(`Piece is out board boundaries`);
+  placeItem(position, token){
+    if(Board.isOutOfBoundaries(position))
+      throw new Error(`Piece/Target is out board boundaries`);
     else
-      this.tiles[piece.position[0]][piece.position[1]] = piece.ascii;
-  }
-
-  setTarget(position){
-
-    if(this.isOutOfBoundaries(position[0])||this.isOutOfBoundaries(position[1]))
-      throw new Error(`Target is out board boundaries`);
-    else
-      this.tiles[position[0]][position[1]]= this.targetChar;
-  }
-  
-  showPieceMoves(piece){
-   //TODO: Come back to this method when a moves knight's moves attribute is ready 
+      this.tiles[position[0]][position[1]] = token;
   }
   
 
-  isOutOfBoundaries(coordinate){
-    if(coordinate>this.size||coordinate<0)
-      return true;
-    else
-      return false
-  }
 }
 
 class Knight{
-  ascii = 'k';
+  token = 'k';
   moves = [];
   constructor(row,col){
     this.position = [row,col];
@@ -48,11 +40,13 @@ class Knight{
   getMoves(){
     const twoStep = 2;
     const oneStep = 1;
-    let move = [];
+   
+    //Check if moves are allowed before creating branched moves from each of them
 
     // -
     //|
     //|
+
     const uur = [this.position[0]+oneStep,this.position[1]+twoStep];
     this.moves.push(uur);
     //  |
@@ -97,8 +91,5 @@ class Knight{
 const board = new Board();
 const knight = new Knight(4,4);
 board.targetPos = [2,4];
-board.placePiece(knight);
-board.setTarget(board.targetPos);
+board.placeItem(knight.position, knight.token);
 board.visualize();
-knight.getMoves();
-console.dir(knight.moves);
