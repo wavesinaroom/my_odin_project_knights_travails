@@ -5,9 +5,9 @@ class Board{
   moveToken = 'a';
 
   static isOutOfBoundaries(x,y){
-    if(x>this.size||x<0)
+    if(x>this.size-1||x<0)
       return true;
-    else if(y>this.size||y<0)
+    else if(y>this.size-1||y<0)
       return true;
     else
       return false
@@ -25,12 +25,12 @@ class Board{
     if(Board.isOutOfBoundaries(position[0],position[1]))
       throw new Error(`Piece/Target is out board boundaries`);
     else
-      this.tiles[position[0]][position[1]] = token;
+      this.tiles[position[1]][position[0]] = token;
   }
   
   showPieceMoves(piece){
     for(let i = 0; i<piece.moves.length; ++i)
-      this.tiles[piece.moves[i][0]][piece.moves[i][1]] = this.moveToken;
+      this.tiles[piece.moves[i][1]][piece.moves[i][0]] = this.moveToken;
   }
 
 }
@@ -94,10 +94,8 @@ class Knight{
   }
 }
 const board = new Board();
-const knight = new Knight(4,4);
-board.targetPos = [2,4];
+const knight = new Knight(3,5);
 board.placeItem(knight.position, knight.token);
-board.placeItem(board.targetPos, board.targetToken);
 knight.getMoves();
 board.showPieceMoves(knight);
 board.visualize();
