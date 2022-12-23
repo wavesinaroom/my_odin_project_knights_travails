@@ -93,7 +93,8 @@ class Knight{
   }
 }
 const board = new Board();
-const knight = new Knight(3,0);
+const knight = new Knight(6,6);
 board.placeItem(knight.position, knight.token);
 knight.getMoves();
+board.markPieceMoves(knight);
 board.visualize();
