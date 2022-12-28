@@ -79,21 +79,21 @@ class MovesTree{
   }
 
   findTargetNode(target){
-    if(this.uur.toString() === target.toString())
+    if((this.uur!==undefined)&&(this.uur.toString() === target.toString()))
       return this.uur;
-    else if(this.rru.toString() === target.toString())
+    else if((this.rru!==undefined)&&(this.rru.toString() === target.toString()))
       return this.rru;
-    else if(this.rrd.toString() === target.toString())
+    else if((this.rrd!==undefined)&&(this.rrd.toString() === target.toString()))
       return this.rrd;
-    else if(this.ddr.toString() === target.toString())
+    else if((this.ddr!==undefined)&&(this.ddr.toString() === target.toString()))
       return this.ddr;
-    else if(this.ddl.toString() === target.toString())
+    else if((this.ddl!==undefined)&&(this.ddl.toString() === target.toString()))
       return this.ddl;
-    else if(this.lld.toString() === target.toString())
+    else if((this.lld!==undefined)&&(this.lld.toString() === target.toString()))
       return this.lld;
-    else if(this.llu.toString() === target.toString())
+    else if((this.llu!==undefined)&&(this.llu.toString() === target.toString()))
       return this.llu;
-    else if(this.uul.toString() === target.toString())
+    else if((this.uul!==undefined)&&(this.uul.toString() === target.toString()))
       return this.uul;
     else
       return undefined;
@@ -154,19 +154,10 @@ class Knight{
     if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
       root.uul=Array.from([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
 
-    console.log(root.pos);
-    console.log(root.uur);
-    console.log(root.rru);
-    console.log(root.rrd);
-    console.log(root.ddr);
-    console.log(root.ddl);
-    console.log(root.lld);
-    console.log(root.llu);
-    console.log(root.uul);
-    
 
     const foundTarget = root.findTargetNode(target);
 
+    console.log(foundTarget);
     /*
     if(foundTarget!==undefined){
       this.getMoves(root.uur,target);
@@ -184,7 +175,7 @@ class Knight{
   }
 }
 const board = new Board();
-board.targetPos = [7,0];
+board.targetPos = [4,3];
 const knight = new Knight(6,2);
 
 board.placeItem(knight.position, knight.token);
