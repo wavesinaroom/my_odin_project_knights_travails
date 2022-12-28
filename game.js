@@ -110,10 +110,10 @@ class Knight{
     const twoSteps = 2;
     const oneStep = 1;
     
-    if(root.findTargetNode(target)!==undefined)
+    if(root.pos.toString()===target.toString()){
+      console.log('Found it')
       return;
-
-    
+    }
     // -
     //|
     //|
@@ -158,7 +158,6 @@ class Knight{
     if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
       root.uul=new MovesTree([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
 
-    console.log(root.uur, root.rru, root.rrd, root.ddr, root.ddl, root.lld, root.llu, root.uul);
     if(root.uur!==undefined)
       this.getMoves(root.uur,target);
     if(root.rru!==undefined)
@@ -178,7 +177,7 @@ class Knight{
   }    
 }
 const board = new Board();
-board.targetPos = [3,3];
+board.targetPos = [7,0];
 const knight = new Knight(6,2);
 
 board.placeItem(knight.position, knight.token);
