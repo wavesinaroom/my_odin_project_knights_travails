@@ -38,116 +38,149 @@ class Board{
 
 class MovesTree{
   constructor(position){
-    const twoStep = 2;
-    const oneStep = 1;
 
+    this.pos = position;
     // -
     //|
     //|
-    this.uur = [position[0]+oneStep, position[1]+twoStep];
+    this.uur; 
     
     //  |
     //--
-    this.rru = [position[0]+twoStep, position[1]+oneStep];
+    this.rru;
 
     //--
     //  |
-    this.rrd = [position[0]+twoStep,position[1]-oneStep]
+    this.rrd;
 
     //|
     //|
     // -
-    this.ddr = [position[0]+oneStep, position[1]-twoStep];
+    this.ddr;
 
     // |
     // |
     //-
-    this.ddl = [position[0]-oneStep, position[1]-twoStep]; 
+    this.ddl;
 
     // --
     //|
-    this.lld = [position[0]-twoStep, position[1]-oneStep];
+    this.lld;
 
     //|
     // --
-    this.llu = [position[0]-twoStep, position[1]+oneStep];
+    this.llu;
 
     //-
     // |
     // |
-    this.uul = [position[0]-oneStep, position[1]+twoStep];
+    this.uul;
 
+  }
+
+  findTargetNode(target){
+    if(this.uur.toString() === target.toString())
+      return this.uur;
+    else if(this.rru.toString() === target.toString())
+      return this.rru;
+    else if(this.rrd.toString() === target.toString())
+      return this.rrd;
+    else if(this.ddr.toString() === target.toString())
+      return this.ddr;
+    else if(this.ddl.toString() === target.toString())
+      return this.ddl;
+    else if(this.lld.toString() === target.toString())
+      return this.lld;
+    else if(this.llu.toString() === target.toString())
+      return this.llu;
+    else if(this.uul.toString() === target.toString())
+      return this.uul;
+    else
+      return undefined;
   }
 }
 class Knight{
   token = 'k';
-  moves = [];
   constructor(row,col){
     this.position = [row,col];
+    this.moves = new MovesTree(this.position);
   }
 
-  getMoves(position,target){
+  getMoves(root,target){
     const twoSteps = 2;
     const oneStep = 1;
     
-    let moves = [];
-    let foundTarget = false;
-    
     // -
     //|
     //|
-    if(!Board.isOutOfBoundaries(position[0]+oneStep,position[1]-twoSteps))
-      moves.push(Array.from([position[0]+oneStep,position[1]-twoSteps]));
+    if(!Board.isOutOfBoundaries(root.pos[0]+oneStep,root.pos[1]-twoSteps))
+      root.uur=Array.from([root.pos[0]+oneStep,root.pos[1]-twoSteps]);
 
     //  |
     //--
-    if(!Board.isOutOfBoundaries(position[0]+twoSteps,position[1]-oneStep))
-      moves.push(Array.from([position[0]+twoSteps,position[1]-oneStep]));
+    if(!Board.isOutOfBoundaries(root.pos[0]+twoSteps,root.pos[1]-oneStep))
+      root.rru=Array.from([root.pos[0]+twoSteps,root.pos[1]-oneStep]);
 
     //--
     //  |
-    if(!Board.isOutOfBoundaries(position[0]+twoSteps,position[1]+oneStep))
-      moves.push(Array.from([position[0]+twoSteps,position[1]+oneStep]));
+    if(!Board.isOutOfBoundaries(root.pos[0]+twoSteps,root.pos[1]+oneStep))
+      root.rrd=Array.from([root.pos[0]+twoSteps,root.pos[1]+oneStep]);
 
     //|
     //|
     // -
-    if(!Board.isOutOfBoundaries(position[0]+oneStep,position[1]+twoSteps))
-      moves.push(Array.from([position[0]+oneStep,position[1]+twoSteps]));
+    if(!Board.isOutOfBoundaries(root.pos[0]+oneStep,root.pos[1]+twoSteps))
+      root.ddr=Array.from([root.pos[0]+oneStep,root.pos[1]+twoSteps]);
 
     // |
     // |
     //-
-    if(!Board.isOutOfBoundaries(position[0]-oneStep,position[1]+twoSteps))
-      moves.push(Array.from([position[0]-oneStep,position[1]+twoSteps]));
+    if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]+twoSteps))
+      root.ddl=Array.from([root.pos[0]-oneStep,root.pos[1]+twoSteps]);
 
     // --
     //|
-    if(!Board.isOutOfBoundaries(position[0]-twoSteps,position[1]+oneStep))
-      moves.push(Array.from([position[0]-twoSteps,position[1]+oneStep]));
+    if(!Board.isOutOfBoundaries(root.pos[0]-twoSteps,root.pos[1]+oneStep))
+      root.lld=Array.from([root.pos[0]-twoSteps,root.pos[1]+oneStep]);
     
     //|
     // --
-    if(!Board.isOutOfBoundaries(position[0]-twoSteps,position[1]-oneStep))
-      moves.push(Array.from([position[0]-twoSteps,position[1]-oneStep]));
+    if(!Board.isOutOfBoundaries(root.pos[0]-twoSteps,root.pos[1]-oneStep))
+      root.llu=Array.from([root.pos[0]-twoSteps,root.pos[1]-oneStep]);
 
     //-
     // |
     // |
-    if(!Board.isOutOfBoundaries(position[0]-oneStep,position[1]-twoSteps))
-      moves.push(Array.from([position[0]-oneStep,position[1]-twoSteps]));
+    if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
+      root.uul=Array.from([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
 
-    for(let i = 0; i<moves.length; ++i){
-      if(moves[i].toString() === target.toString()){
-        foundTarget = true;
-        break;
-      }
+    console.log(root.pos);
+    console.log(root.uur);
+    console.log(root.rru);
+    console.log(root.rrd);
+    console.log(root.ddr);
+    console.log(root.ddl);
+    console.log(root.lld);
+    console.log(root.llu);
+    console.log(root.uul);
+    
+
+    const foundTarget = root.findTargetNode(target);
+
+    /*
+    if(foundTarget!==undefined){
+      this.getMoves(root.uur,target);
+      this.getMoves(root.rru,target);
+      this.getMoves(root.rrd,target);
+      this.getMoves(root.ddr,target);
+      this.getMoves(root.ddl,target);
+      this.getMoves(root.lld,target);
+      this.getMoves(root.llu,target);
+      this.getMoves(root.uul,target);
+    }else{
+      return; 
     }
-
-    if(foundTarget)
-      return moves;
-    else
-      console.log('nothing')
+    */
   }
 }
 const board = new Board();
@@ -157,6 +190,5 @@ const knight = new Knight(6,2);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
-knight.moves = knight.getMoves(knight.position, board.targetPos);
-console.dir(knight.moves);
+knight.getMoves(knight.moves, board.targetPos);
 board.visualize();
