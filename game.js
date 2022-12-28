@@ -79,21 +79,21 @@ class MovesTree{
   }
 
   findTargetNode(target){
-    if((this.uur!==undefined)&&(this.uur.toString() === target.toString()))
+    if((this.uur!==undefined)&&(this.uur.pos.toString() === target.toString()))
       return this.uur;
-    else if((this.rru!==undefined)&&(this.rru.toString() === target.toString()))
+    else if((this.rru!==undefined)&&(this.rru.pos.toString() === target.toString()))
       return this.rru;
-    else if((this.rrd!==undefined)&&(this.rrd.toString() === target.toString()))
+    else if((this.rrd!==undefined)&&(this.rrd.pos.toString() === target.toString()))
       return this.rrd;
-    else if((this.ddr!==undefined)&&(this.ddr.toString() === target.toString()))
+    else if((this.ddr!==undefined)&&(this.ddr.pos.toString() === target.toString()))
       return this.ddr;
-    else if((this.ddl!==undefined)&&(this.ddl.toString() === target.toString()))
+    else if((this.ddl!==undefined)&&(this.ddl.pos.toString() === target.toString()))
       return this.ddl;
-    else if((this.lld!==undefined)&&(this.lld.toString() === target.toString()))
+    else if((this.lld!==undefined)&&(this.lld.pos.toString() === target.toString()))
       return this.lld;
-    else if((this.llu!==undefined)&&(this.llu.toString() === target.toString()))
+    else if((this.llu!==undefined)&&(this.llu.pos.toString() === target.toString()))
       return this.llu;
-    else if((this.uul!==undefined)&&(this.uul.toString() === target.toString()))
+    else if((this.uul!==undefined)&&(this.uul.pos.toString() === target.toString()))
       return this.uul;
     else
       return undefined;
@@ -110,10 +110,6 @@ class Knight{
     const twoSteps = 2;
     const oneStep = 1;
     
-    if(root.pos.toString()===target.toString()){
-      console.log('Found it')
-      return;
-    }
     // -
     //|
     //|
@@ -158,22 +154,26 @@ class Knight{
     if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
       root.uul=new MovesTree([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
 
+    if(root.findTargetNode(target)!==undefined){
+      console.log('Found it')
+      return;
+    }
     if(root.uur!==undefined)
-      this.getMoves(root.uur,target);
+      return this.getMoves(root.uur,target);
     if(root.rru!==undefined)
-      this.getMoves(root.rru,target);
+      return this.getMoves(root.rru,target);
     if(root.rrd!==undefined)
-      this.getMoves(root.rrd,target);
+      return this.getMoves(root.rrd,target);
     if(root.ddr!==undefined)
-      this.getMoves(root.ddr,target);
+      return this.getMoves(root.ddr,target);
     if(root.ddl!==undefined)
-      this.getMoves(root.ddl,target);
+      return this.getMoves(root.ddl,target);
     if(root.lld!==undefined)
-      this.getMoves(root.lld,target);
+      return this.getMoves(root.lld,target);
     if(root.llu!==undefined)
-      this.getMoves(root.llu,target);
+      return this.getMoves(root.llu,target);
     if(root.uul!==undefined)
-      this.getMoves(root.uul,target);
+      return this.getMoves(root.uul,target);
   }    
 }
 const board = new Board();
