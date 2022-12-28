@@ -110,72 +110,75 @@ class Knight{
     const twoSteps = 2;
     const oneStep = 1;
     
+    if(root.findTargetNode(target)!==undefined)
+      return;
+
+    
     // -
     //|
     //|
     if(!Board.isOutOfBoundaries(root.pos[0]+oneStep,root.pos[1]-twoSteps))
-      root.uur=Array.from([root.pos[0]+oneStep,root.pos[1]-twoSteps]);
+      root.uur=new MovesTree([root.pos[0]+oneStep,root.pos[1]-twoSteps]);
 
     //  |
     //--
     if(!Board.isOutOfBoundaries(root.pos[0]+twoSteps,root.pos[1]-oneStep))
-      root.rru=Array.from([root.pos[0]+twoSteps,root.pos[1]-oneStep]);
+      root.rru=new MovesTree([root.pos[0]+twoSteps,root.pos[1]-oneStep]);
 
     //--
     //  |
     if(!Board.isOutOfBoundaries(root.pos[0]+twoSteps,root.pos[1]+oneStep))
-      root.rrd=Array.from([root.pos[0]+twoSteps,root.pos[1]+oneStep]);
+      root.rrd=new MovesTree([root.pos[0]+twoSteps,root.pos[1]+oneStep]);
 
     //|
     //|
     // -
     if(!Board.isOutOfBoundaries(root.pos[0]+oneStep,root.pos[1]+twoSteps))
-      root.ddr=Array.from([root.pos[0]+oneStep,root.pos[1]+twoSteps]);
+      root.ddr=new MovesTree([root.pos[0]+oneStep,root.pos[1]+twoSteps]);
 
     // |
     // |
     //-
     if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]+twoSteps))
-      root.ddl=Array.from([root.pos[0]-oneStep,root.pos[1]+twoSteps]);
+      root.ddl=new MovesTree([root.pos[0]-oneStep,root.pos[1]+twoSteps]);
 
     // --
     //|
     if(!Board.isOutOfBoundaries(root.pos[0]-twoSteps,root.pos[1]+oneStep))
-      root.lld=Array.from([root.pos[0]-twoSteps,root.pos[1]+oneStep]);
+      root.lld=new MovesTree([root.pos[0]-twoSteps,root.pos[1]+oneStep]);
     
     //|
     // --
     if(!Board.isOutOfBoundaries(root.pos[0]-twoSteps,root.pos[1]-oneStep))
-      root.llu=Array.from([root.pos[0]-twoSteps,root.pos[1]-oneStep]);
+      root.llu=new MovesTree([root.pos[0]-twoSteps,root.pos[1]-oneStep]);
 
     //-
     // |
     // |
     if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
-      root.uul=Array.from([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
+      root.uul=new MovesTree([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
 
-
-    const foundTarget = root.findTargetNode(target);
-
-    console.log(foundTarget);
-    /*
-    if(foundTarget!==undefined){
+    console.log(root.uur, root.rru, root.rrd, root.ddr, root.ddl, root.lld, root.llu, root.uul);
+    if(root.uur!==undefined)
       this.getMoves(root.uur,target);
+    if(root.rru!==undefined)
       this.getMoves(root.rru,target);
+    if(root.rrd!==undefined)
       this.getMoves(root.rrd,target);
+    if(root.ddr!==undefined)
       this.getMoves(root.ddr,target);
+    if(root.ddl!==undefined)
       this.getMoves(root.ddl,target);
+    if(root.lld!==undefined)
       this.getMoves(root.lld,target);
+    if(root.llu!==undefined)
       this.getMoves(root.llu,target);
+    if(root.uul!==undefined)
       this.getMoves(root.uul,target);
-    }else{
-      return; 
-    }
-    */
-  }
+  }    
 }
 const board = new Board();
-board.targetPos = [4,3];
+board.targetPos = [3,3];
 const knight = new Knight(6,2);
 
 board.placeItem(knight.position, knight.token);
