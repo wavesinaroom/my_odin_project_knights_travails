@@ -2,7 +2,7 @@ class Board{
   static size = 8;
 
   targetPos = [];
-  targetToken = 'd';
+  targetToken = 't';
   moveToken = 'a';
 
   static isOutOfBoundaries(x,y){
@@ -43,58 +43,77 @@ class Knight{
     this.position = [row,col];
   }
 
-  getMoves(){
+  getMoves(position,target){
     const twoSteps = 2;
     const oneStep = 1;
-   
+    
+    let moves = [];
+    let foundTarget = false;
+    
     // -
     //|
     //|
-    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]-twoSteps))
-      this.moves.push(Array.from([this.position[0]+oneStep,this.position[1]-twoSteps]));
+    if(!Board.isOutOfBoundaries(position[0]+oneStep,position[1]-twoSteps))
+      moves.push(Array.from([position[0]+oneStep,position[1]-twoSteps]));
 
     //  |
     //--
-    if(!Board.isOutOfBoundaries(this.position[0]+twoSteps,this.position[1]-oneStep))
-      this.moves.push(Array.from([this.position[0]+twoSteps,this.position[1]-oneStep]));
+    if(!Board.isOutOfBoundaries(position[0]+twoSteps,position[1]-oneStep))
+      moves.push(Array.from([position[0]+twoSteps,position[1]-oneStep]));
 
     //--
     //  |
-    if(!Board.isOutOfBoundaries(this.position[0]+twoSteps,this.position[1]+oneStep))
-      this.moves.push(Array.from([this.position[0]+twoSteps,this.position[1]+oneStep]));
+    if(!Board.isOutOfBoundaries(position[0]+twoSteps,position[1]+oneStep))
+      moves.push(Array.from([position[0]+twoSteps,position[1]+oneStep]));
 
     //|
     //|
     // -
-    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]+twoSteps))
-      this.moves.push(Array.from([this.position[0]+oneStep,this.position[1]+twoSteps]));
+    if(!Board.isOutOfBoundaries(position[0]+oneStep,position[1]+twoSteps))
+      moves.push(Array.from([position[0]+oneStep,position[1]+twoSteps]));
 
     // |
     // |
     //-
-    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]+twoSteps))
-      this.moves.push(Array.from([this.position[0]-oneStep,this.position[1]+twoSteps]));
+    if(!Board.isOutOfBoundaries(position[0]-oneStep,position[1]+twoSteps))
+      moves.push(Array.from([position[0]-oneStep,position[1]+twoSteps]));
 
     // --
     //|
-    if(!Board.isOutOfBoundaries(this.position[0]-twoSteps,this.position[1]+oneStep))
-      this.moves.push(Array.from([this.position[0]-twoSteps,this.position[1]+oneStep]));
+    if(!Board.isOutOfBoundaries(position[0]-twoSteps,position[1]+oneStep))
+      moves.push(Array.from([position[0]-twoSteps,position[1]+oneStep]));
     
     //|
     // --
-    if(!Board.isOutOfBoundaries(this.position[0]-twoSteps,this.position[1]-oneStep))
-      this.moves.push(Array.from([this.position[0]-twoSteps,this.position[1]-oneStep]));
+    if(!Board.isOutOfBoundaries(position[0]-twoSteps,position[1]-oneStep))
+      moves.push(Array.from([position[0]-twoSteps,position[1]-oneStep]));
 
     //-
     // |
     // |
-    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]-twoSteps))
-      this.moves.push(Array.from([this.position[0]-oneStep,this.position[1]-twoSteps]));
+    if(!Board.isOutOfBoundaries(position[0]-oneStep,position[1]-twoSteps))
+      moves.push(Array.from([position[0]-oneStep,position[1]-twoSteps]));
+
+    for(let i = 0; i<moves.length; ++i){
+      if(moves[i].toString() === target.toString()){
+        foundTarget = true;
+        break;
+      }
+    }
+
+    if(foundTarget)
+      return moves;
+    else
+      console.log('nothing')
   }
 }
 const board = new Board();
-const knight = new Knight(6,6);
+board.targetPos = [7,0];
+const knight = new Knight(6,2);
+
 board.placeItem(knight.position, knight.token);
-knight.getMoves();
-board.markPieceMoves(knight);
+board.placeItem(board.targetPos, board.targetToken)
+
+knight.moves = knight.getMoves(knight.position, board.targetPos);
+console.dir(knight.moves);
 board.visualize();
