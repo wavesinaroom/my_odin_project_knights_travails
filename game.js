@@ -38,8 +38,9 @@
 
 class MovesTree{
   constructor(position){
-
+    
     this.pos = position;
+
     // -
     //|
     //|
@@ -134,6 +135,12 @@ class Knight{
     if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
       root.uul=new MovesTree([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
 
+    /*
+     * BFS goes here
+     * if it finds any leaf node that equals target stop recursion
+     * else 
+     * recursively call this function for each of the possible moves
+     */
   }    
 
 }
