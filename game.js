@@ -1,4 +1,4 @@
-class Board{
+  class Board{
   static size = 8;
 
   targetPos = [];
@@ -106,7 +106,7 @@ class Knight{
     this.moves = new MovesTree(this.position);
   }
 
-  getMoves(root,target){
+  getMoves(root,target, visited){
     const twoSteps = 2;
     const oneStep = 1;
     
@@ -154,34 +154,56 @@ class Knight{
     if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
       root.uul=new MovesTree([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
 
-    if(root.findTargetNode(target)!==undefined){
+
+      if(root.uur!==undefined)
+        console.log(root.uur.pos)
+      if(root.rru!==undefined)
+        console.log(root.rru.pos)
+      if(root.rrd!==undefined)
+        console.log(root.rrd.pos)
+      if(root.ddr!==undefined)
+        console.log(root.ddr.pos)
+      if(root.ddl!==undefined)
+        console.log(root.ddl.pos)
+      if(root.lld!==undefined)
+        console.log(root.lld.pos)
+      if(root.llu!==undefined)
+        console.log(root.llu.pos)
+      if(root.uul!==undefined)
+        console.log(root.uul.pos)
+
+    console.log(`Root:${root.pos} Visited:${visited.pos}`)
+
+    console.log("--------------------")
+    if(root.findTargetNode(target)===undefined){
+      if(root.uur!==undefined&&root.uur.pos.toString()!==visited.pos.toString())
+        this.getMoves(root.uur,target, root);
+      if(root.rru!==undefined&&root.rru.pos.toString()!==visited.pos.toString())
+        this.getMoves(root.rru,target, root);
+      if(root.rrd!==undefined&&root.rrd.pos.toString()!==visited.pos.toString())
+        this.getMoves(root.rrd,target, root);
+      if(root.ddr!==undefined&&root.ddr.pos.toString()!==visited.pos.toString())
+        this.getMoves(root.ddr,target, root);
+      if(root.ddl!==undefined&&root.ddl.pos.toString()!==visited.pos.toString())
+        this.getMoves(root.ddl,target, root);
+      if(root.lld!==undefined&&root.lld.pos.toString()!==visited.pos.toString())
+        this.getMoves(root.lld,target, root);
+      if(root.llu!==undefined&&root.llu.pos.toString()!==visited.pos.toString())
+        this.getMoves(root.llu,target, root);
+      if(root.uul!==undefined&&root.uul.pos&&toString()!==visited.pos.toString())
+        this.getMoves(root.uul,target, root);
+    }else{
       console.log('Found it')
       return;
     }
-    if(root.uur!==undefined)
-      return this.getMoves(root.uur,target);
-    if(root.rru!==undefined)
-      return this.getMoves(root.rru,target);
-    if(root.rrd!==undefined)
-      return this.getMoves(root.rrd,target);
-    if(root.ddr!==undefined)
-      return this.getMoves(root.ddr,target);
-    if(root.ddl!==undefined)
-      return this.getMoves(root.ddl,target);
-    if(root.lld!==undefined)
-      return this.getMoves(root.lld,target);
-    if(root.llu!==undefined)
-      return this.getMoves(root.llu,target);
-    if(root.uul!==undefined)
-      return this.getMoves(root.uul,target);
   }    
 }
 const board = new Board();
-board.targetPos = [7,0];
-const knight = new Knight(6,2);
+board.targetPos = [5,2];
+const knight = new Knight(2,5);
 
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
-knight.getMoves(knight.moves, board.targetPos);
+knight.getMoves(knight.moves, board.targetPos, knight.moves);
 board.visualize();
