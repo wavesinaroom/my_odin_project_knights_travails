@@ -84,10 +84,10 @@ class MovesTree{
     while(queue.length>0){
       queue.push(...func(queue[0]));
       if(target.toString()===queue[0].pos.toString())
-        return true;
+        return queue[0];
       queue.shift();
     }
-    return false;
+    return;
   }
 
   toArray(node){
@@ -119,53 +119,53 @@ class Knight{
     this.moves = new MovesTree(this.position);
   }
 
-  getMoves(root, target){
+  getMoves(node, target){
     const twoSteps = 2;
     const oneStep = 1;
     
     // -
     //|
     //|
-    if(!Board.isOutOfBoundaries(root.pos[0]+oneStep,root.pos[1]-twoSteps))
-      root.uur=new MovesTree([root.pos[0]+oneStep,root.pos[1]-twoSteps]);
+    if(!Board.isOutOfBoundaries(node.pos[0]+oneStep,node.pos[1]-twoSteps))
+      node.uur=new MovesTree([node.pos[0]+oneStep,node.pos[1]-twoSteps]);
 
     //  |
     //--
-    if(!Board.isOutOfBoundaries(root.pos[0]+twoSteps,root.pos[1]-oneStep))
-      root.rru=new MovesTree([root.pos[0]+twoSteps,root.pos[1]-oneStep]);
+    if(!Board.isOutOfBoundaries(node.pos[0]+twoSteps,node.pos[1]-oneStep))
+      node.rru=new MovesTree([node.pos[0]+twoSteps,node.pos[1]-oneStep]);
 
     //--
     //  |
-    if(!Board.isOutOfBoundaries(root.pos[0]+twoSteps,root.pos[1]+oneStep))
-      root.rrd=new MovesTree([root.pos[0]+twoSteps,root.pos[1]+oneStep]);
+    if(!Board.isOutOfBoundaries(node.pos[0]+twoSteps,node.pos[1]+oneStep))
+      node.rrd=new MovesTree([node.pos[0]+twoSteps,node.pos[1]+oneStep]);
 
     //|
     //|
     // -
-    if(!Board.isOutOfBoundaries(root.pos[0]+oneStep,root.pos[1]+twoSteps))
-      root.ddr=new MovesTree([root.pos[0]+oneStep,root.pos[1]+twoSteps]);
+    if(!Board.isOutOfBoundaries(node.pos[0]+oneStep,node.pos[1]+twoSteps))
+      node.ddr=new MovesTree([node.pos[0]+oneStep,node.pos[1]+twoSteps]);
 
     // |
     // |
     //-
-    if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]+twoSteps))
-      root.ddl=new MovesTree([root.pos[0]-oneStep,root.pos[1]+twoSteps]);
+    if(!Board.isOutOfBoundaries(node.pos[0]-oneStep,node.pos[1]+twoSteps))
+      node.ddl=new MovesTree([node.pos[0]-oneStep,node.pos[1]+twoSteps]);
 
     // --
     //|
-    if(!Board.isOutOfBoundaries(root.pos[0]-twoSteps,root.pos[1]+oneStep))
-      root.lld=new MovesTree([root.pos[0]-twoSteps,root.pos[1]+oneStep]);
+    if(!Board.isOutOfBoundaries(node.pos[0]-twoSteps,node.pos[1]+oneStep))
+      node.lld=new MovesTree([node.pos[0]-twoSteps,node.pos[1]+oneStep]);
     
     //|
     // --
-    if(!Board.isOutOfBoundaries(root.pos[0]-twoSteps,root.pos[1]-oneStep))
-      root.llu=new MovesTree([root.pos[0]-twoSteps,root.pos[1]-oneStep]);
+    if(!Board.isOutOfBoundaries(node.pos[0]-twoSteps,node.pos[1]-oneStep))
+      node.llu=new MovesTree([node.pos[0]-twoSteps,node.pos[1]-oneStep]);
 
     //-
     // |
     // |
-    if(!Board.isOutOfBoundaries(root.pos[0]-oneStep,root.pos[1]-twoSteps))
-      root.uul=new MovesTree([root.pos[0]-oneStep,root.pos[1]-twoSteps]);
+    if(!Board.isOutOfBoundaries(node.pos[0]-oneStep,node.pos[1]-twoSteps))
+      node.uul=new MovesTree([node.pos[0]-oneStep,node.pos[1]-twoSteps]);
 
     /*
      * BFS goes here
@@ -173,16 +173,35 @@ class Knight{
      * else 
      * recursively call this function for each of the possible moves
      */
-    const result = root.BFS(root.toArray, target);
-    console.dir(result);
-     
-
+    const found = this.moves.BFS(this.moves.toArray, target);
+    if(found !== undefined){
+      console.dir(this.moves)
+      return;
+    }
+    else{
+      if(node.uur!==null)
+        this.getMoves(node.uur, target)
+      if(node.rru!==null)
+        this.getMoves(node.rru, target)
+      if(node.rrd!==null)
+        this.getMoves(node.rrd, target);
+      if(node.ddr!==null)
+        this.getMoves(node.ddr, target);
+      if(node.ddl!==null)
+        this.getMoves(node.ddl, target);
+      if(node.lld!==null)
+        this.getMoves(node.lld, target);
+      if(node.llu!==null)
+        this.getMoves(node.llu, target);
+      if(node.uul!==null)
+        this.getMoves(node.uul, target);
+    }
   }    
 
 }
 const board = new Board();
 board.targetPos = [5,2];
-const knight = new Knight(3,4);
+const knight = new Knight(6,3);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
