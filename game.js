@@ -1,4 +1,4 @@
-  class Board{
+class Board{
   static size = 8;
 
   targetPos = [];
@@ -44,41 +44,74 @@ class MovesTree{
     // -
     //|
     //|
-    this.uur; 
+    this.uur = null; 
     
     //  |
     //--
-    this.rru;
+    this.rru = null;
 
     //--
     //  |
-    this.rrd;
+    this.rrd = null;
 
     //|
     //|
     // -
-    this.ddr;
+    this.ddr = null;
 
     // |
     // |
     //-
-    this.ddl;
+    this.ddl = null;
 
     // --
     //|
-    this.lld;
+    this.lld = null;
 
     //|
     // --
-    this.llu;
+    this.llu = null;
 
     //-
     // |
     // |
-    this.uul;
+    this.uul = null;
 
   }
 
+  BFS(func,target){
+    let queue = [this];
+    while(queue.length>0){
+      queue.push(...func(queue[0]));
+      console.log(queue)
+      queue.shift();
+      if(target.toString()===queue[0].pos.toString())
+        return true;
+    }
+    return false;
+  }
+
+  toArray(node){
+
+    let array = [];
+    if(node.uur!==null)
+      array.push(node.uur);
+    if(node.rru!==null)
+      array.push(node.rru);
+    if(node.rrd!==null)
+      array.push(node.rrd);
+    if(node.ddr!==null)
+      array.push(node.ddr);
+    if(node.ddl!==null)
+      array.push(node.ddl);
+    if(node.lld!==null)
+      array.push(node.lld);
+    if(node.llu!==null)
+      array.push(node.llu);
+    if(node.uul!==null)
+      array.push(node.uul);
+    return array;
+  }
 }
 class Knight{
   token = 'k';
@@ -87,7 +120,7 @@ class Knight{
     this.moves = new MovesTree(this.position);
   }
 
-  getMoves(root){
+  getMoves(root, target){
     const twoSteps = 2;
     const oneStep = 1;
     
@@ -141,13 +174,16 @@ class Knight{
      * else 
      * recursively call this function for each of the possible moves
      */
+    const result = root.BFS(root.toArray, target);
+    console.dir(result);
+     
+
   }    
 
 }
 const board = new Board();
 board.targetPos = [5,2];
-const knight = new Knight(2,3);
-
+const knight = new Knight(4,4);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
