@@ -83,10 +83,9 @@ class MovesTree{
     let queue = [this];
     while(queue.length>0){
       queue.push(...func(queue[0]));
-      console.log(queue)
-      queue.shift();
       if(target.toString()===queue[0].pos.toString())
         return true;
+      queue.shift();
     }
     return false;
   }
@@ -183,7 +182,7 @@ class Knight{
 }
 const board = new Board();
 board.targetPos = [5,2];
-const knight = new Knight(4,4);
+const knight = new Knight(3,4);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
