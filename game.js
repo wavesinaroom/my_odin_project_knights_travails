@@ -167,12 +167,6 @@ class Knight{
     if(!Board.isOutOfBoundaries(node.pos[0]-oneStep,node.pos[1]-twoSteps))
       node.uul=new MovesTree([node.pos[0]-oneStep,node.pos[1]-twoSteps]);
 
-    /*
-     * BFS goes here
-     * if it finds any leaf node that equals target stop recursion
-     * else 
-     * recursively call this function for each of the possible moves
-     */
     const found = this.moves.BFS(this.moves.toArray, target);
     if(found !== undefined){
       console.dir(this.moves)
