@@ -87,7 +87,6 @@ class MovesTree{
         return queue[0];
       queue.shift();
     }
-    return;
   }
 
   toArray(node){
@@ -116,13 +115,13 @@ class Knight{
   token = 'k';
   constructor(row,col){
     this.position = [row,col];
-    this.moves = new MovesTree(this.position);
-  }
+    this.moves = new MovesTree(this.position,this);
+}
 
-  getMoves(node, target){
+  getMoves(node, target, path){
     const twoSteps = 2;
     const oneStep = 1;
-    
+    let visited; 
     // -
     //|
     //|
@@ -133,71 +132,94 @@ class Knight{
     //--
     if(!Board.isOutOfBoundaries(node.pos[0]+twoSteps,node.pos[1]-oneStep))
       node.rru=new MovesTree([node.pos[0]+twoSteps,node.pos[1]-oneStep]);
-
     //--
     //  |
     if(!Board.isOutOfBoundaries(node.pos[0]+twoSteps,node.pos[1]+oneStep))
       node.rrd=new MovesTree([node.pos[0]+twoSteps,node.pos[1]+oneStep]);
-
     //|
     //|
     // -
     if(!Board.isOutOfBoundaries(node.pos[0]+oneStep,node.pos[1]+twoSteps))
       node.ddr=new MovesTree([node.pos[0]+oneStep,node.pos[1]+twoSteps]);
-
     // |
     // |
     //-
     if(!Board.isOutOfBoundaries(node.pos[0]-oneStep,node.pos[1]+twoSteps))
       node.ddl=new MovesTree([node.pos[0]-oneStep,node.pos[1]+twoSteps]);
-
     // --
     //|
     if(!Board.isOutOfBoundaries(node.pos[0]-twoSteps,node.pos[1]+oneStep))
       node.lld=new MovesTree([node.pos[0]-twoSteps,node.pos[1]+oneStep]);
-    
     //|
     // --
     if(!Board.isOutOfBoundaries(node.pos[0]-twoSteps,node.pos[1]-oneStep))
       node.llu=new MovesTree([node.pos[0]-twoSteps,node.pos[1]-oneStep]);
-
     //-
     // |
     // |
     if(!Board.isOutOfBoundaries(node.pos[0]-oneStep,node.pos[1]-twoSteps))
       node.uul=new MovesTree([node.pos[0]-oneStep,node.pos[1]-twoSteps]);
 
+    
+    path === undefined ? visited = [node.pos]:visited = this.mergePath(path, node.pos);
     const found = this.moves.BFS(this.moves.toArray, target);
     if(found !== undefined){
-      console.dir(this.moves)
-      return;
+      console.log(visited);
+      return visited;
     }
     else{
+      
       if(node.uur!==null)
-        this.getMoves(node.uur, target)
+        if(this.checkVisited(node.uur.pos, visited)===false)
+          this.getMoves(node.uur, target, visited);
       if(node.rru!==null)
-        this.getMoves(node.rru, target)
+        if(this.checkVisited(node.rru.pos, visited)===false)
+          this.getMoves(node.rru, target, visited);
       if(node.rrd!==null)
-        this.getMoves(node.rrd, target);
+        if(this.checkVisited(node.rrd.pos, visited)===false)
+          this.getMoves(node.rrd, target, visited);
       if(node.ddr!==null)
-        this.getMoves(node.ddr, target);
+        if(this.checkVisited(node.ddr.pos, visited)===false)
+          this.getMoves(node.ddr, target, visited);
       if(node.ddl!==null)
-        this.getMoves(node.ddl, target);
+        if(this.checkVisited(node.ddl.pos, visited)===false)
+          this.getMoves(node.ddl, target, visited);
       if(node.lld!==null)
-        this.getMoves(node.lld, target);
+        if(this.checkVisited(node.lld.pos, visited)===false)
+          this.getMoves(node.lld, target, visited);
       if(node.llu!==null)
-        this.getMoves(node.llu, target);
+        if(this.checkVisited(node.llu.pos, visited)===false)
+          this.getMoves(node.llu, target, visited);
       if(node.uul!==null)
-        this.getMoves(node.uul, target);
+        if(this.checkVisited(node.uul.pos, visited)===false)
+          this.getMoves(node.uul, target, visited);
     }
+
   }    
+  mergePath(path, current){
+    let merged = [];
+    merged.push(current)
+    path.forEach(step=>{
+      merged.push(step);
+    });
+    return merged;
+  }
+  checkVisited(pos, visited){
+    let check = false;
+    visited.forEach(tile=>{
+      if(tile.toString()===pos.toString())
+        check = true;
+    });
+    return check;
+  }
 
 }
 const board = new Board();
 board.targetPos = [5,2];
-const knight = new Knight(6,3);
+const knight = new Knight(5,4);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
-knight.getMoves(knight.moves, board.targetPos, knight.moves);
+const path = knight.getMoves(knight.moves, board.targetPos);
+console.log(path);
 board.visualize();
