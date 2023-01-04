@@ -98,6 +98,7 @@ class Knight{
       this.moves.addMove(this.position, [this.position[0]-oneStep,this.position[1]-twoSteps]);
 
 
+    console.log(this.moves);
     
     /*path === undefined ? visited = [node.pos]:visited = this.mergePath(path, node.pos);
     const found = this.moves.BFS(this.moves.toArray, target);
