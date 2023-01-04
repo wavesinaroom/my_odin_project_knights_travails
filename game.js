@@ -42,7 +42,7 @@ class MovesGraph{
     this.map.set(start, []);
   }
 
-  addMove(position, move){
+  addMoves(position, move){
     this.map.get(position).push(move);
   }
 
@@ -74,50 +74,49 @@ class Knight{
     this.moves = new MovesGraph(this.position);
 }
 
-  getMoves(node, target){
+  getMoves(map, position, target){
     const twoSteps = 2;
     const oneStep = 1;
-
     // -
     //|
     //|
-    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]-twoSteps))
-      this.moves.addMove(this.position,[this.position[0]+oneStep,this.position[1]-twoSteps]);
+    if(!Board.isOutOfBoundaries(position[0]+oneStep,position[1]-twoSteps))
+      map.addMoves(position,[position[0]+oneStep,position[1]-twoSteps]);
 
     //  |
     //--
-    if(!Board.isOutOfBoundaries(this.position[0]+twoSteps,this.position[1]-oneStep))
-      this.moves.addMove(this.position, [this.position[0]+twoSteps,this.position[1]-oneStep]);
+    if(!Board.isOutOfBoundaries(map[0]+twoSteps,position[1]-oneStep))
+      map.addMoves(position, [position[0]+twoSteps,position[1]-oneStep]);
     //--
     //  |
-    if(!Board.isOutOfBoundaries(this.position[0]+twoSteps,this.position[1]+oneStep))
-      this.moves.addMove(this.position, [this.position[0]+twoSteps,this.position[1]+oneStep]);
+    if(!Board.isOutOfBoundaries(map[0]+twoSteps,position[1]+oneStep))
+      map.addMoves(position, [position[0]+twoSteps,position[1]+oneStep]);
     //|
     //|
     // -
-    if(!Board.isOutOfBoundaries(this.position[0]+oneStep,this.position[1]+twoSteps))
-      this.moves.addMove(this.position, [this.position[0]+oneStep,this.position[1]+twoSteps]);
+    if(!Board.isOutOfBoundaries(map[0]+oneStep,position[1]+twoSteps))
+      map.addMoves(position, [position[0]+oneStep,position[1]+twoSteps]);
     // |
     // |
     //-
-    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]+twoSteps))
-      this.moves.addMove(this.position, [this.position[0]-oneStep,this.position[1]+twoSteps]);
+    if(!Board.isOutOfBoundaries(map[0]-oneStep,position[1]+twoSteps))
+      map.addMoves(position, [position[0]-oneStep,position[1]+twoSteps]);
     // --
     //|
-    if(!Board.isOutOfBoundaries(this.position[0]-twoSteps,this.position[1]+oneStep))
-      this.moves.addMove(this.position, [this.position[0]-twoSteps,this.position[1]+oneStep]);
+    if(!Board.isOutOfBoundaries(map[0]-twoSteps,position[1]+oneStep))
+      map.addMoves(position, [position[0]-twoSteps,position[1]+oneStep]);
     //|
     // --
-    if(!Board.isOutOfBoundaries(this.position[0]-twoSteps,this.position[1]-oneStep))
-      this.moves.addMove(this.position, [this.position[0]-twoSteps,this.position[1]-oneStep]);
+    if(!Board.isOutOfBoundaries(map[0]-twoSteps,position[1]-oneStep))
+      map.addMoves(position, [position[0]-twoSteps,position[1]-oneStep]);
     //-
     // |
     // |
-    if(!Board.isOutOfBoundaries(this.position[0]-oneStep,this.position[1]-twoSteps))
-      this.moves.addMove(this.position, [this.position[0]-oneStep,this.position[1]-twoSteps]);
+    if(!Board.isOutOfBoundaries(map[0]-oneStep,position[1]-twoSteps))
+      map.addMoves(position, [position[0]-oneStep,position[1]-twoSteps]);
 
 
-    this.moves.BFS(this.position, target); 
+    this.moves.BFS(node.position, target); 
   }    
 
 }
@@ -127,5 +126,5 @@ const knight = new Knight(6,4);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
-const path = knight.getMoves(knight.moves, board.targetPos);
+const path = knight.getMoves(knight.moves, knight.position, board.targetPos);
 board.visualize();
