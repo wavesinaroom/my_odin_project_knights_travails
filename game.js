@@ -45,6 +45,26 @@ class MovesGraph{
   addMove(position, move){
     this.map.get(position).push(move);
   }
+
+  BFS(start){
+    let visited = {};
+    let queue = []; 
+    visited[start] = true;
+    queue.push(start);
+    while(queue.length!==0){
+      const head = queue.shift();
+      console.log(head);
+      const list = this.map.get(head);
+      for(let i in list)
+      {
+        const neigh = list[i];
+        if(!visited[neigh]){
+          visited[neigh] = true;
+          queue.shift();
+        }
+      }
+    }
+  }
 }
 
 class Knight{
@@ -98,7 +118,6 @@ class Knight{
       this.moves.addMove(this.position, [this.position[0]-oneStep,this.position[1]-twoSteps]);
 
 
-    console.log(this.moves);
     
     /*path === undefined ? visited = [node.pos]:visited = this.mergePath(path, node.pos);
     const found = this.moves.BFS(this.moves.toArray, target);
@@ -134,7 +153,7 @@ class Knight{
 }
 const board = new Board();
 board.targetPos = [5,6];
-const knight = new Knight(6,4);
+const knight = new Knight(4,4);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
