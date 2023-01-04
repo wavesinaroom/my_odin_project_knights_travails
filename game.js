@@ -160,6 +160,7 @@ class Knight{
     if(!Board.isOutOfBoundaries(node.pos[0]-oneStep,node.pos[1]-twoSteps))
       node.uul=new MovesTree([node.pos[0]-oneStep,node.pos[1]-twoSteps]);
 
+    console.log(`Node: ${node.pos}`)
     
     path === undefined ? visited = [node.pos]:visited = this.mergePath(path, node.pos);
     const found = this.moves.BFS(this.moves.toArray, target);
@@ -169,30 +170,11 @@ class Knight{
     }
     else{
       
-      if(node.uur!==null)
-        if(this.checkVisited(node.uur.pos, visited)===false)
-          this.getMoves(node.uur, target, visited);
-      if(node.rru!==null)
-        if(this.checkVisited(node.rru.pos, visited)===false)
-          this.getMoves(node.rru, target, visited);
-      if(node.rrd!==null)
-        if(this.checkVisited(node.rrd.pos, visited)===false)
-          this.getMoves(node.rrd, target, visited);
-      if(node.ddr!==null)
-        if(this.checkVisited(node.ddr.pos, visited)===false)
-          this.getMoves(node.ddr, target, visited);
-      if(node.ddl!==null)
-        if(this.checkVisited(node.ddl.pos, visited)===false)
-          this.getMoves(node.ddl, target, visited);
-      if(node.lld!==null)
-        if(this.checkVisited(node.lld.pos, visited)===false)
-          this.getMoves(node.lld, target, visited);
-      if(node.llu!==null)
-        if(this.checkVisited(node.llu.pos, visited)===false)
-          this.getMoves(node.llu, target, visited);
-      if(node.uul!==null)
-        if(this.checkVisited(node.uul.pos, visited)===false)
-          this.getMoves(node.uul, target, visited);
+      Object.keys(node).forEach(key=>{
+        if(key!=="pos"&&node[key]!==null)
+          if(this.checkVisited(node[key].pos, visited)===false)
+            this.getMoves(node[key],target,visited);
+      })
     }
 
   }    
@@ -216,10 +198,9 @@ class Knight{
 }
 const board = new Board();
 board.targetPos = [5,2];
-const knight = new Knight(5,4);
+const knight = new Knight(7,4);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
 const path = knight.getMoves(knight.moves, board.targetPos);
-console.log(path);
 board.visualize();
