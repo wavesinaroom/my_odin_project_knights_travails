@@ -135,14 +135,65 @@ class MovesTree{
     }
   }
 
+  DFS(node, target, path){
+
+    let visited; 
+    path === undefined ? visited = [node.pos]: visited = this.mergePath(path, node.pos);
+    if(node.pos.toString()===target.toString()){
+      visited.reverse();
+      console.log(visited);
+      return;
+    }
+    else{
+      if(node.uur!==null)
+        this.DFS(node.uur, target, visited);
+      if(node.rru!==null)
+        this.DFS(node.rru, target, visited);
+      if(node.rrd!==null)
+        this.DFS(node.rrd, target, visited);
+      if(node.ddr!==null)
+        this.DFS(node.ddr, target, visited);
+      if(node.ddl!==null)
+        this.DFS(node.ddl, target, visited);
+      if(node.lld!==null)
+        this.DFS(node.lld, target, visited);
+      if(node.llu!==null)
+        this.DFS(node.llu, target, visited);
+      if(node.uul!==null)
+        this.DFS(node.uul, target, visited);
+    }
+  }
+
   toArray(node){
 
     let array = [];
-    for(let move in node){
-      if(move!==null&&Object.keys(node)[0]!=='pos')
-        array.push(move)
-    }
+
+    if(node.uur!==null)
+      array.push(node.uur);
+    if(node.rru!==null)
+      array.push(node.rru);
+    if(node.rrd!==null)
+      array.push(node.rrd);
+    if(node.ddr!==null)
+      array.push(node.ddr);
+    if(node.ddl!==null)
+      array.push(node.ddl);
+    if(node.lld!==null)
+      array.push(node.lld);
+    if(node.llu!==null)
+      array.push(node.llu);
+    if(node.uul!==null)
+      array.push(node.uul);
     return array;
+  }
+
+  mergePath(path, current){
+    let merged = [];
+    merged.push(current);
+    path.forEach(step=>{
+      merged.push(step)
+    });
+    return merged;
   }
 }
 class Knight{
@@ -153,11 +204,11 @@ class Knight{
   }
 }
 const board = new Board();
-board.targetPos = [5,2];
-const knight = new Knight(4,4);
+board.targetPos = [6,0];
+const knight = new Knight(0,7);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
 knight.moves.BFS(knight.moves.toArray, board.targetPos);
-console.log(knight.moves);
+knight.moves.DFS(knight.moves, board.targetPos)
 board.visualize();
