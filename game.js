@@ -79,49 +79,9 @@ class MovesTree{
 
   }
 
-  BFS(func,target){
-    let queue = [this];
-    while(queue.length>0){
-      queue.push(...func(queue[0]));
-      if(target.toString()===queue[0].pos.toString())
-        return queue[0];
-      queue.shift();
-    }
-  }
-
-  toArray(node){
-
-    let array = [];
-    if(node.uur!==null)
-      array.push(node.uur);
-    if(node.rru!==null)
-      array.push(node.rru);
-    if(node.rrd!==null)
-      array.push(node.rrd);
-    if(node.ddr!==null)
-      array.push(node.ddr);
-    if(node.ddl!==null)
-      array.push(node.ddl);
-    if(node.lld!==null)
-      array.push(node.lld);
-    if(node.llu!==null)
-      array.push(node.llu);
-    if(node.uul!==null)
-      array.push(node.uul);
-    return array;
-  }
-}
-class Knight{
-  token = 'k';
-  constructor(row,col){
-    this.position = [row,col];
-    this.moves = new MovesTree(this.position,this);
-}
-
-  getMoves(node, target, path){
+  static getMoves(node){
     const twoSteps = 2;
     const oneStep = 1;
-    let visited; 
     // -
     //|
     //|
@@ -160,47 +120,44 @@ class Knight{
     if(!Board.isOutOfBoundaries(node.pos[0]-oneStep,node.pos[1]-twoSteps))
       node.uul=new MovesTree([node.pos[0]-oneStep,node.pos[1]-twoSteps]);
 
-    console.log(`Node: ${node.pos}`)
-    
-    path === undefined ? visited = [node.pos]:visited = this.mergePath(path, node.pos);
-    const found = this.moves.BFS(this.moves.toArray, target);
-    if(found !== undefined){
-      console.log(visited);
-      return visited;
-    }
-    else{
-      
-      Object.keys(node).forEach(key=>{
-        if(key!=="pos"&&node[key]!==null)
-          if(this.checkVisited(node[key].pos, visited)===false)
-            this.getMoves(node[key],target,visited);
-      })
-    }
-
   }    
-  mergePath(path, current){
-    let merged = [];
-    merged.push(current)
-    path.forEach(step=>{
-      merged.push(step);
-    });
-    return merged;
-  }
-  checkVisited(pos, visited){
-    let check = false;
-    visited.forEach(tile=>{
-      if(tile.toString()===pos.toString())
-        check = true;
-    });
-    return check;
+
+  BFS(func,target){
+    let queue = [this];
+    while(queue.length>0){
+      if(target.toString()!==queue[0].pos.toString()){
+        MovesTree.getMoves(queue[0])
+        queue.push(...func(queue[0]));
+      }
+      else
+        return; 
+      queue.shift();
+    }
   }
 
+  toArray(node){
+
+    let array = [];
+    for(let move in node){
+      if(move!==null&&Object.keys(node)[0]!=='pos')
+        array.push(move)
+    }
+    return array;
+  }
+}
+class Knight{
+  token = 'k';
+  constructor(row,col){
+    this.position = [row,col];
+    this.moves = new MovesTree(this.position,this);
+  }
 }
 const board = new Board();
 board.targetPos = [5,2];
-const knight = new Knight(7,4);
+const knight = new Knight(4,4);
 board.placeItem(knight.position, knight.token);
 board.placeItem(board.targetPos, board.targetToken)
 
-const path = knight.getMoves(knight.moves, board.targetPos);
+knight.moves.BFS(knight.moves.toArray, board.targetPos);
+console.log(knight.moves);
 board.visualize();
